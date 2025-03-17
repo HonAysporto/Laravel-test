@@ -13,3 +13,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/items', [ItemController::class, 'index'])->name('items');
 Route::post('/register', [AdminController::class, 'register']);
+Route::post('/signin', [AdminController::class, 'signin']);

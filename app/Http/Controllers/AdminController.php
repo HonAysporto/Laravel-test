@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 class AdminController extends Controller
 {
@@ -64,4 +67,33 @@ class AdminController extends Controller
 
     }
 
-}
+    public function signin(Request $req) {
+        $credentials = $req->validate([
+            'email'=> ['required', 'email'],
+            'password' => ['required']
+        ]);
+    
+        if (!$token = Auth::guard('admin')->attempt($credentials)) {
+            return response()->json([
+                'status' => false,
+                'errors' => 'Provided credentials do not match our records'
+            ], 401);
+        }
+    
+        $admin = Auth::guard('admin')->user();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Admin Found',
+            'token' => $token,
+            'admin' => $admin->makeHidden(['password', 'created_at', 'updated_at']) 
+        ]);
+    }
+    
+      
+    
+    
+    
+    }
+
+
