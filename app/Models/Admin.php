@@ -27,13 +27,12 @@
 //         "permission",
 //         "password"
 //     ]; 
-
-
 // }
 
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -48,7 +47,8 @@ class Admin extends Authenticatable implements JWTSubject
         "department",
         "roles",
         "permission",
-        "password"
+        "password",
+        "subscriber_id"
     ]; 
 
     /**
@@ -63,6 +63,11 @@ class Admin extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims() {
         return []; 
+    }
+
+    
+    public function subscribers() : BelongsTo {
+        return $this->belongsTo(Subscriber::class);
     }
 }
 
