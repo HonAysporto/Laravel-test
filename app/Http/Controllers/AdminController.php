@@ -86,7 +86,7 @@ class AdminController extends Controller
             'status' => true,
             'message' => 'Admin Found',
             'token' => $token,
-            'admin' => $admin->makeHidden(['password', 'created_at', 'updated_at']) 
+            // 'admin' => $admin->makeHidden(['password', 'created_at', 'updated_at']) 
         ]);
     }
     
